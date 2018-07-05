@@ -14,6 +14,7 @@ import javax.swing.JOptionPane;
  */
 public class FuncionariosPanel extends javax.swing.JPanel
 {
+    @SuppressWarnings("FieldMayBeFinal")
     private Controlador control;
     DefaultListModel listModel = new DefaultListModel();
     
@@ -34,7 +35,7 @@ public class FuncionariosPanel extends javax.swing.JPanel
         
         for(int i = 0; i < control.ctrlFuncionarios().getListaFuncionarios().size(); i++) 
         {
-            listModel.addElement(control.ctrlFuncionarios().getListaFuncionarios().get(i).getMatricula() + "            "+ control.ctrlFuncionarios().getListaFuncionarios().get(i).getNome() + "            " + control.ctrlFuncionarios().getListaFuncionarios().get(i).getEndereco());
+            listModel.addElement(control.ctrlFuncionarios().getListaFuncionarios().get(i));
         }
     }
     
@@ -306,7 +307,7 @@ public class FuncionariosPanel extends javax.swing.JPanel
             JOptionPane.showMessageDialog(null,"Alterado com Sucesso!");
         }
         else
-        JOptionPane.showMessageDialog(null,"Não foi possivel alterar pois há campos vazios!");
+            JOptionPane.showMessageDialog(null,"Não foi possivel alterar pois há campos vazios!");
 
         TextoMatricula.setText("");
         TextoSalario.setText("");
@@ -328,28 +329,36 @@ public class FuncionariosPanel extends javax.swing.JPanel
 
     private void BotaoCadastrarActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_BotaoCadastrarActionPerformed
     {//GEN-HEADEREND:event_BotaoCadastrarActionPerformed
-        if((!"".equals(TextoMatricula.getText()))&&(!"".equals(TextoSalario.getText()))&&(!"".equals(TextoNome.getText()))&&(!"".equals(TextoEndereco.getText()))&&(!"".equals(TextoTelefone.getText())))
+        try
         {
-            if(control.ctrlFuncionarios().CadastrarFuncionario(TextoMatricula.getText( ),Float.parseFloat(TextoSalario.getText()),TextoNome.getText(),TextoEndereco.getText(),TextoTelefone.getText()))
+            if((!"".equals(TextoMatricula.getText()))&&(!"".equals(TextoSalario.getText()))&&(!"".equals(TextoNome.getText()))&&(!"".equals(TextoEndereco.getText()))&&(!"".equals(TextoTelefone.getText())))
             {
-                atualizarLista();
-                JOptionPane.showMessageDialog(null,"Cadastrado com Sucesso!");
-            }
+                if(control.ctrlFuncionarios().CadastrarFuncionario(TextoMatricula.getText( ),Float.parseFloat(TextoSalario.getText()),TextoNome.getText(),TextoEndereco.getText(),TextoTelefone.getText()))
+                {
+                    atualizarLista();
+                    JOptionPane.showMessageDialog(null,"Cadastrado com Sucesso!");
+                }
 
+                else
+                {
+                    System.out.println("Erro ao cadastrar");
+                    JOptionPane.showMessageDialog(null,"Ja existe Funcionario com esse CPF");
+                }
+            }
             else
-            {
-                System.out.println("Erro ao cadastrar");
-                JOptionPane.showMessageDialog(null,"Ja existe Funcionario com esse CPF");
-            }
+                JOptionPane.showMessageDialog(null,"Não foi possivel Cadastar, pois há campos vazios!");
         }
-        else
-        JOptionPane.showMessageDialog(null,"Não foi possivel Cadastar, pois há campos vazios!");
-
+        catch(NumberFormatException ex)
+        {
+            JOptionPane.showMessageDialog(null,"Salário inválido!");
+        }
+        /*
         TextoMatricula.setText("");
         TextoSalario.setText("");
         TextoNome.setText("");
         TextoEndereco.setText("");
         TextoTelefone.setText("");
+    */
     }//GEN-LAST:event_BotaoCadastrarActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButton1ActionPerformed

@@ -35,7 +35,7 @@ public class EmpresasPanel extends javax.swing.JPanel
         
         for(int i = 0; i < control.ctrlClientes().getEmpresasClientes().size(); i++) 
         {
-            listModel.addElement(control.ctrlClientes().getEmpresasClientes().get(i).getNome());
+            listModel.addElement(control.ctrlClientes().getEmpresasClientes().get(i));
         }
     }
 
@@ -309,13 +309,6 @@ public class EmpresasPanel extends javax.swing.JPanel
         }
         else
             JOptionPane.showMessageDialog(null,"Não foi possivel Cadastrar, pois ha campos vazios!");
-        
-        TextoCnpj.setText("");
-        TextoEmailEmpresa.setText("");
-        TextoNomeEmpresa.setText("");
-        TextoEnderecoEmpresa.setText("");
-        TextoTelefoneEmpresa.setText("");
-        TextoContato.setText("");
     }//GEN-LAST:event_BotaoCadastrareActionPerformed
 
     private void TextoCnpjActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_TextoCnpjActionPerformed

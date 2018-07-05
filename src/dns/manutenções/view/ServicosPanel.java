@@ -5,8 +5,14 @@
 package dns.manutenções.view;
 
 import dns.manutenções.control.Controlador;
+import dns.manutenções.model.Cliente;
+import dns.manutenções.model.Funcionario;
+import dns.manutenções.model.Peca;
+import dns.manutenções.model.Servico;
+import java.util.ArrayList;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -31,7 +37,7 @@ public class ServicosPanel extends javax.swing.JPanel
         
         for(int i = 0; i < control.ctrlFuncionarios().getListaFuncionarios().size(); i++) 
         {
-            funcionariosListModel.addElement(control.ctrlFuncionarios().getListaFuncionarios().get(i).getMatricula() + " " + control.ctrlFuncionarios().getListaFuncionarios().get(i).getNome());
+            funcionariosListModel.addElement(control.ctrlFuncionarios().getListaFuncionarios().get(i));
         }
     }
     
@@ -41,12 +47,12 @@ public class ServicosPanel extends javax.swing.JPanel
         
         for(int i = 0; i < control.ctrlClientes().getPessoasClientes().size(); i++) 
         {
-            clientesListModel.addElement(control.ctrlClientes().getPessoasClientes().get(i).getNome());
+            clientesListModel.addElement(control.ctrlClientes().getPessoasClientes().get(i));
         }
         
         for(int i = 0; i < control.ctrlClientes().getEmpresasClientes().size(); i++) 
         {
-            clientesListModel.addElement(control.ctrlClientes().getEmpresasClientes().get(i).getNome());
+            clientesListModel.addElement(control.ctrlClientes().getEmpresasClientes().get(i));
         }
     }
     
@@ -56,7 +62,7 @@ public class ServicosPanel extends javax.swing.JPanel
         
         for(int i = 0; i < control.ctrlPecas().getListaPecas().size(); i++) 
         {
-            pecasListModel.addElement(control.ctrlPecas().getListaPecas().get(i).getCodigo() + "       " + control.ctrlPecas().getListaPecas().get(i).getNome() + "       R$" + control.ctrlPecas().getListaPecas().get(i).getPreco());
+            pecasListModel.addElement(control.ctrlPecas().getListaPecas().get(i));
         }
         
     }
@@ -67,44 +73,10 @@ public class ServicosPanel extends javax.swing.JPanel
         
         for(int i = 0; i < control.getServicos().size(); i++) 
         {
-            servicosListModel.addElement(control.getServicos().get(i).getCliente());
+            servicosListModel.addElement(control.getServicos().get(i));
         }
     }
-    
-    public void atualizarBoxFuncionarios()
-    {
-        funcionariosBox.removeAllElements();//Listener Pattern
-        
-        for(int i = 0; i < control.ctrlClientes().getClientes().size(); i++)
-        {
-            funcionariosBox.addElement(control.ctrlFuncionarios().getListaFuncionarios().get(i).getNome());
-        }
-    }
-   
-    public void atualizarBoxClientes()
-    {   
-        control.ctrlClientes().atualizarListaClientes();//Observer Pattern
-        
-        clientesBox.removeAllElements();
-        
-        for(int i = 0; i < control.ctrlClientes().getClientes().size(); i++)
-        {
-            clientesBox.addElement(control.ctrlClientes().getClientes().get(i));
-        }
-        
-        /* Atualiza o ComboBox com strings 
-        for(int i = 0; i < control.ctrlClientes().getPessoasClientes().size(); i++)
-        {
-            clientesBox.addElement(control.ctrlClientes().getPessoasClientes().get(i).getNome());
-        }
-        
-        for(int i = 0; i < control.ctrlClientes().getEmpresasClientes().size(); i++)
-        {
-            clientesBox.addElement(control.ctrlClientes().getEmpresasClientes().get(i).getNome());
-        }*/
-    }
-        
-    
+            
     /**
      * Creates new form ClientesPanel
      * @param c
@@ -129,15 +101,15 @@ public class ServicosPanel extends javax.swing.JPanel
         ClientesComboBox = new javax.swing.JComboBox<>();
         FuncionariosComboBox = new javax.swing.JComboBox<>();
         TextoData = new javax.swing.JFormattedTextField();
-        jTextField1 = new javax.swing.JTextField();
-        jButton6 = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
+        TextoValor = new javax.swing.JTextField();
+        ConfirmarAgendamentoButton = new javax.swing.JButton();
+        CancelarAgendamentoButton = new javax.swing.JButton();
         ScrollPanelClientesp4 = new javax.swing.JScrollPane();
         ListaFuncionarios = new javax.swing.JList();
         ScrollPanelClientesp1 = new javax.swing.JScrollPane();
-        ListaPessoas = new javax.swing.JList();
+        ListaClientes = new javax.swing.JList();
         ScrollPanelClientesp2 = new javax.swing.JScrollPane();
-        ListaPeças = new javax.swing.JList();
+        ListaPecas = new javax.swing.JList();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
@@ -147,17 +119,23 @@ public class ServicosPanel extends javax.swing.JPanel
         ScrollPanelClientesp = new javax.swing.JScrollPane();
         ListaServiços = new javax.swing.JList();
         AgendarButton = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton8 = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        RealizarServicoButton = new javax.swing.JButton();
+        RelatorioButton = new javax.swing.JButton();
+        SaldoLabel = new javax.swing.JLabel();
+        ServicosConcluidosLabel = new javax.swing.JLabel();
+        CancelarServicoButton = new javax.swing.JButton();
+        AlterarServicoButton = new javax.swing.JButton();
+        FuncionariosLabel = new javax.swing.JLabel();
+        ServicosPendentesLabel = new javax.swing.JLabel();
+        DescontoButton = new javax.swing.JButton();
+        jSeparator1 = new javax.swing.JSeparator();
 
         NovoServicoPanel.setTitle("Agendar Serviço - DNS Manutenções");
         NovoServicoPanel.setLocation(new java.awt.Point(500, 400));
         NovoServicoPanel.setLocationByPlatform(true);
-        NovoServicoPanel.setMaximumSize(new java.awt.Dimension(625, 315));
-        NovoServicoPanel.setMinimumSize(new java.awt.Dimension(625, 315));
-        NovoServicoPanel.setPreferredSize(new java.awt.Dimension(625, 315));
+        NovoServicoPanel.setMaximumSize(new java.awt.Dimension(610, 315));
+        NovoServicoPanel.setMinimumSize(new java.awt.Dimension(610, 315));
+        NovoServicoPanel.setPreferredSize(new java.awt.Dimension(610, 315));
         NovoServicoPanel.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         ClientesComboBox.setModel(clientesBox);
@@ -174,16 +152,31 @@ public class ServicosPanel extends javax.swing.JPanel
                 TextoDataActionPerformed(evt);
             }
         });
-        NovoServicoPanel.getContentPane().add(TextoData, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 40, 110, -1));
-        NovoServicoPanel.getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 100, 110, -1));
+        NovoServicoPanel.getContentPane().add(TextoData, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 40, 110, -1));
+        NovoServicoPanel.getContentPane().add(TextoValor, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 110, 110, -1));
 
-        jButton6.setText("Agendar");
-        NovoServicoPanel.getContentPane().add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 140, 110, 50));
+        ConfirmarAgendamentoButton.setText("Agendar");
+        ConfirmarAgendamentoButton.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                ConfirmarAgendamentoButtonActionPerformed(evt);
+            }
+        });
+        NovoServicoPanel.getContentPane().add(ConfirmarAgendamentoButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 150, 110, 50));
 
-        jButton7.setText("Cancelar");
-        NovoServicoPanel.getContentPane().add(jButton7, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 210, 110, 50));
+        CancelarAgendamentoButton.setText("Cancelar");
+        CancelarAgendamentoButton.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                CancelarAgendamentoButtonActionPerformed(evt);
+            }
+        });
+        NovoServicoPanel.getContentPane().add(CancelarAgendamentoButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 210, 110, 50));
 
         ListaFuncionarios.setModel(funcionariosListModel);
+        ListaFuncionarios.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         ListaFuncionarios.addFocusListener(new java.awt.event.FocusAdapter()
         {
             public void focusGained(java.awt.event.FocusEvent evt)
@@ -202,53 +195,75 @@ public class ServicosPanel extends javax.swing.JPanel
                 ListaFuncionariosComponentShown(evt);
             }
         });
+        ListaFuncionarios.addListSelectionListener(new javax.swing.event.ListSelectionListener()
+        {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt)
+            {
+                ListaFuncionariosValueChanged(evt);
+            }
+        });
         ScrollPanelClientesp4.setViewportView(ListaFuncionarios);
 
         NovoServicoPanel.getContentPane().add(ScrollPanelClientesp4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 130, 220));
 
-        ListaPessoas.setModel(clientesListModel);
-        ListaPessoas.addFocusListener(new java.awt.event.FocusAdapter()
+        ListaClientes.setModel(clientesListModel);
+        ListaClientes.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        ListaClientes.addFocusListener(new java.awt.event.FocusAdapter()
         {
             public void focusGained(java.awt.event.FocusEvent evt)
             {
-                ListaPessoasFocusGained(evt);
+                ListaClientesFocusGained(evt);
             }
             public void focusLost(java.awt.event.FocusEvent evt)
             {
-                ListaPessoasFocusLost(evt);
+                ListaClientesFocusLost(evt);
             }
         });
-        ListaPessoas.addComponentListener(new java.awt.event.ComponentAdapter()
+        ListaClientes.addComponentListener(new java.awt.event.ComponentAdapter()
         {
             public void componentShown(java.awt.event.ComponentEvent evt)
             {
-                ListaPessoasComponentShown(evt);
+                ListaClientesComponentShown(evt);
             }
         });
-        ScrollPanelClientesp1.setViewportView(ListaPessoas);
+        ListaClientes.addListSelectionListener(new javax.swing.event.ListSelectionListener()
+        {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt)
+            {
+                ListaClientesValueChanged(evt);
+            }
+        });
+        ScrollPanelClientesp1.setViewportView(ListaClientes);
 
         NovoServicoPanel.getContentPane().add(ScrollPanelClientesp1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 40, 130, 220));
 
-        ListaPeças.setModel(pecasListModel);
-        ListaPeças.addFocusListener(new java.awt.event.FocusAdapter()
+        ListaPecas.setModel(pecasListModel);
+        ListaPecas.addFocusListener(new java.awt.event.FocusAdapter()
         {
             public void focusGained(java.awt.event.FocusEvent evt)
             {
-                ListaPeçasFocusGained(evt);
+                ListaPecasFocusGained(evt);
             }
             public void focusLost(java.awt.event.FocusEvent evt)
             {
-                ListaPeçasFocusLost(evt);
+                ListaPecasFocusLost(evt);
             }
         });
-        ListaPeças.addComponentListener(new java.awt.event.ComponentAdapter()
+        ListaPecas.addComponentListener(new java.awt.event.ComponentAdapter()
         {
             public void componentShown(java.awt.event.ComponentEvent evt)
             {
-                ListaPeçasComponentShown(evt);
+                ListaPecasComponentShown(evt);
             }
         });
-        ScrollPanelClientesp2.setViewportView(ListaPeças);
+        ListaPecas.addListSelectionListener(new javax.swing.event.ListSelectionListener()
+        {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt)
+            {
+                ListaPecasValueChanged(evt);
+            }
+        });
+        ScrollPanelClientesp2.setViewportView(ListaPecas);
 
         NovoServicoPanel.getContentPane().add(ScrollPanelClientesp2, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 40, 130, 220));
 
@@ -270,24 +285,49 @@ public class ServicosPanel extends javax.swing.JPanel
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel6.setText("Data");
         jLabel6.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        NovoServicoPanel.getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 10, 110, 20));
+        NovoServicoPanel.getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 10, 110, 20));
 
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel7.setText("Valor");
         jLabel7.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        NovoServicoPanel.getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 70, 110, 20));
+        NovoServicoPanel.getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 80, 110, 20));
 
         setMaximumSize(new java.awt.Dimension(595, 322));
         setMinimumSize(new java.awt.Dimension(595, 322));
         setPreferredSize(new java.awt.Dimension(595, 322));
+        addFocusListener(new java.awt.event.FocusAdapter()
+        {
+            public void focusGained(java.awt.event.FocusEvent evt)
+            {
+                formFocusGained(evt);
+            }
+        });
+        addComponentListener(new java.awt.event.ComponentAdapter()
+        {
+            public void componentShown(java.awt.event.ComponentEvent evt)
+            {
+                formComponentShown(evt);
+            }
+        });
         setLayout(null);
 
         serviçosLabel.setText("Serviços");
         serviçosLabel.setDefaultCapable(false);
+        serviçosLabel.setFocusPainted(false);
+        serviçosLabel.setFocusable(false);
+        serviçosLabel.setRequestFocusEnabled(false);
+        serviçosLabel.setRolloverEnabled(false);
         add(serviçosLabel);
-        serviçosLabel.setBounds(10, 10, 140, 23);
+        serviçosLabel.setBounds(10, 10, 280, 22);
 
         ListaServiços.setModel(servicosListModel);
+        ListaServiços.addContainerListener(new java.awt.event.ContainerAdapter()
+        {
+            public void componentAdded(java.awt.event.ContainerEvent evt)
+            {
+                ListaServiçosComponentAdded(evt);
+            }
+        });
         ListaServiços.addFocusListener(new java.awt.event.FocusAdapter()
         {
             public void focusGained(java.awt.event.FocusEvent evt)
@@ -306,10 +346,17 @@ public class ServicosPanel extends javax.swing.JPanel
                 ListaServiçosComponentShown(evt);
             }
         });
+        ListaServiços.addListSelectionListener(new javax.swing.event.ListSelectionListener()
+        {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt)
+            {
+                ListaServiçosValueChanged(evt);
+            }
+        });
         ScrollPanelClientesp.setViewportView(ListaServiços);
 
         add(ScrollPanelClientesp);
-        ScrollPanelClientesp.setBounds(10, 40, 140, 290);
+        ScrollPanelClientesp.setBounds(10, 40, 280, 290);
 
         AgendarButton.setText("Agendar");
         AgendarButton.addActionListener(new java.awt.event.ActionListener()
@@ -320,33 +367,88 @@ public class ServicosPanel extends javax.swing.JPanel
             }
         });
         add(AgendarButton);
-        AgendarButton.setBounds(160, 10, 120, 50);
+        AgendarButton.setBounds(310, 160, 130, 50);
 
-        jButton2.setText("Concluir");
-        add(jButton2);
-        jButton2.setBounds(160, 70, 120, 50);
+        RealizarServicoButton.setText("Concluir Serviço");
+        RealizarServicoButton.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                RealizarServicoButtonActionPerformed(evt);
+            }
+        });
+        add(RealizarServicoButton);
+        RealizarServicoButton.setBounds(310, 220, 130, 50);
 
-        jButton8.setText("Gerar relatório");
-        add(jButton8);
-        jButton8.setBounds(160, 130, 120, 50);
+        RelatorioButton.setText("Gerar Relatório");
+        RelatorioButton.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                RelatorioButtonActionPerformed(evt);
+            }
+        });
+        add(RelatorioButton);
+        RelatorioButton.setBounds(310, 280, 130, 50);
 
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("R$ " + this.control.getWe().getSaldo());
-        jLabel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Saldo"));
-        add(jLabel1);
-        jLabel1.setBounds(160, 280, 120, 50);
+        SaldoLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        SaldoLabel.setText("R$ " + this.control.getWe().getSaldo());
+        SaldoLabel.setBorder(javax.swing.BorderFactory.createTitledBorder("Saldo"));
+        add(SaldoLabel);
+        SaldoLabel.setBounds(450, 70, 130, 50);
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("Saldo atual:");
-        jLabel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Pendentes"));
-        add(jLabel2);
-        jLabel2.setBounds(160, 220, 120, 50);
+        ServicosConcluidosLabel.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        ServicosConcluidosLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        ServicosConcluidosLabel.setText(String.valueOf(control.getNumServicosConcluidos()));
+        ServicosConcluidosLabel.setBorder(javax.swing.BorderFactory.createTitledBorder("Concluídos"));
+        add(ServicosConcluidosLabel);
+        ServicosConcluidosLabel.setBounds(310, 70, 130, 50);
+
+        CancelarServicoButton.setText("Cancelar Serviço");
+        CancelarServicoButton.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                CancelarServicoButtonActionPerformed(evt);
+            }
+        });
+        add(CancelarServicoButton);
+        CancelarServicoButton.setBounds(450, 220, 130, 50);
+
+        AlterarServicoButton.setText("Alterar Serviço");
+        AlterarServicoButton.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                AlterarServicoButtonActionPerformed(evt);
+            }
+        });
+        add(AlterarServicoButton);
+        AlterarServicoButton.setBounds(450, 160, 130, 50);
+
+        FuncionariosLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        FuncionariosLabel.setText(String.valueOf(control.ctrlFuncionarios().getListaFuncionarios().size()));
+        FuncionariosLabel.setBorder(javax.swing.BorderFactory.createTitledBorder("Funcionários"));
+        add(FuncionariosLabel);
+        FuncionariosLabel.setBounds(450, 10, 130, 50);
+
+        ServicosPendentesLabel.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        ServicosPendentesLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        ServicosPendentesLabel.setText(String.valueOf(control.getNumServicosPendentes()));
+        ServicosPendentesLabel.setBorder(javax.swing.BorderFactory.createTitledBorder("Pendentes"));
+        add(ServicosPendentesLabel);
+        ServicosPendentesLabel.setBounds(310, 10, 130, 50);
+
+        DescontoButton.setText("Desconto");
+        add(DescontoButton);
+        DescontoButton.setBounds(450, 280, 130, 50);
+        add(jSeparator1);
+        jSeparator1.setBounds(310, 140, 270, 10);
     }// </editor-fold>//GEN-END:initComponents
 
     private void ListaServiçosFocusGained(java.awt.event.FocusEvent evt)//GEN-FIRST:event_ListaServiçosFocusGained
     {//GEN-HEADEREND:event_ListaServiçosFocusGained
-        ListaServiços.getSelectedValue();
+        
     }//GEN-LAST:event_ListaServiçosFocusGained
 
     private void ListaServiçosFocusLost(java.awt.event.FocusEvent evt)//GEN-FIRST:event_ListaServiçosFocusLost
@@ -402,8 +504,8 @@ public class ServicosPanel extends javax.swing.JPanel
         TextoTelefone.setText(control.getFuncionarios().get(1).getTelefone());*/
     }//GEN-LAST:event_ListaFuncionariosComponentShown
 
-    private void ListaPessoasFocusGained(java.awt.event.FocusEvent evt)//GEN-FIRST:event_ListaPessoasFocusGained
-    {//GEN-HEADEREND:event_ListaPessoasFocusGained
+    private void ListaClientesFocusGained(java.awt.event.FocusEvent evt)//GEN-FIRST:event_ListaClientesFocusGained
+    {//GEN-HEADEREND:event_ListaClientesFocusGained
         /*if(control.getFuncionarios()!=null)
         {
             TextoMatricula.setText(control.getFuncionarios().get(0).getMatricula());
@@ -412,28 +514,28 @@ public class ServicosPanel extends javax.swing.JPanel
             TextoEndereco.setText(control.getFuncionarios().get(0).getEndereco());
             TextoTelefone.setText(control.getFuncionarios().get(0).getTelefone());
         }*/
-    }//GEN-LAST:event_ListaPessoasFocusGained
+    }//GEN-LAST:event_ListaClientesFocusGained
 
-    private void ListaPessoasFocusLost(java.awt.event.FocusEvent evt)//GEN-FIRST:event_ListaPessoasFocusLost
-    {//GEN-HEADEREND:event_ListaPessoasFocusLost
+    private void ListaClientesFocusLost(java.awt.event.FocusEvent evt)//GEN-FIRST:event_ListaClientesFocusLost
+    {//GEN-HEADEREND:event_ListaClientesFocusLost
         /*TextoMatricula.setText("");
         TextoSalario.setText("");
         TextoNome.setText("");
         TextoEndereco.setText("");
         TextoTelefone.setText("");*/
-    }//GEN-LAST:event_ListaPessoasFocusLost
+    }//GEN-LAST:event_ListaClientesFocusLost
 
-    private void ListaPessoasComponentShown(java.awt.event.ComponentEvent evt)//GEN-FIRST:event_ListaPessoasComponentShown
-    {//GEN-HEADEREND:event_ListaPessoasComponentShown
+    private void ListaClientesComponentShown(java.awt.event.ComponentEvent evt)//GEN-FIRST:event_ListaClientesComponentShown
+    {//GEN-HEADEREND:event_ListaClientesComponentShown
         /*TextoMatricula.setText(control.getFuncionarios().get(1).getMatricula());
         //TextoSalario.setText(control.getFuncionarios().get(1).getSalario());
         TextoNome.setText(control.getFuncionarios().get(1).getNome());
         TextoEndereco.setText(control.getFuncionarios().get(1).getEndereco());
         TextoTelefone.setText(control.getFuncionarios().get(1).getTelefone());*/
-    }//GEN-LAST:event_ListaPessoasComponentShown
+    }//GEN-LAST:event_ListaClientesComponentShown
 
-    private void ListaPeçasFocusGained(java.awt.event.FocusEvent evt)//GEN-FIRST:event_ListaPeçasFocusGained
-    {//GEN-HEADEREND:event_ListaPeçasFocusGained
+    private void ListaPecasFocusGained(java.awt.event.FocusEvent evt)//GEN-FIRST:event_ListaPecasFocusGained
+    {//GEN-HEADEREND:event_ListaPecasFocusGained
         /*if(control.getFuncionarios()!=null)
         {
             TextoMatricula.setText(control.getFuncionarios().get(0).getMatricula());
@@ -442,53 +544,215 @@ public class ServicosPanel extends javax.swing.JPanel
             TextoEndereco.setText(control.getFuncionarios().get(0).getEndereco());
             TextoTelefone.setText(control.getFuncionarios().get(0).getTelefone());
         }*/
-    }//GEN-LAST:event_ListaPeçasFocusGained
+    }//GEN-LAST:event_ListaPecasFocusGained
 
-    private void ListaPeçasFocusLost(java.awt.event.FocusEvent evt)//GEN-FIRST:event_ListaPeçasFocusLost
-    {//GEN-HEADEREND:event_ListaPeçasFocusLost
+    private void ListaPecasFocusLost(java.awt.event.FocusEvent evt)//GEN-FIRST:event_ListaPecasFocusLost
+    {//GEN-HEADEREND:event_ListaPecasFocusLost
         /*TextoMatricula.setText("");
         TextoSalario.setText("");
         TextoNome.setText("");
         TextoEndereco.setText("");
         TextoTelefone.setText("");*/
-    }//GEN-LAST:event_ListaPeçasFocusLost
+    }//GEN-LAST:event_ListaPecasFocusLost
 
-    private void ListaPeçasComponentShown(java.awt.event.ComponentEvent evt)//GEN-FIRST:event_ListaPeçasComponentShown
-    {//GEN-HEADEREND:event_ListaPeçasComponentShown
+    private void ListaPecasComponentShown(java.awt.event.ComponentEvent evt)//GEN-FIRST:event_ListaPecasComponentShown
+    {//GEN-HEADEREND:event_ListaPecasComponentShown
         /*TextoMatricula.setText(control.getFuncionarios().get(1).getMatricula());
         //TextoSalario.setText(control.getFuncionarios().get(1).getSalario());
         TextoNome.setText(control.getFuncionarios().get(1).getNome());
         TextoEndereco.setText(control.getFuncionarios().get(1).getEndereco());
         TextoTelefone.setText(control.getFuncionarios().get(1).getTelefone());*/
-    }//GEN-LAST:event_ListaPeçasComponentShown
+    }//GEN-LAST:event_ListaPecasComponentShown
 
+    private void ConfirmarAgendamentoButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_ConfirmarAgendamentoButtonActionPerformed
+    {//GEN-HEADEREND:event_ConfirmarAgendamentoButtonActionPerformed
+        try
+        {
+            control.cadastrarServico(Float.parseFloat(TextoValor.getText()), TextoData.getText(), (Cliente)ListaClientes.getSelectedValue(), (Funcionario)ListaFuncionarios.getSelectedValue(), (ArrayList<Peca>)ListaPecas.getSelectedValuesList());
+        }
+        catch(NumberFormatException exc)
+        {
+            JOptionPane.showMessageDialog(null,"Erro ao agendar serviço");
+        }
+        
+        this.atualizarListaServicos();
+        ServicosPendentesLabel.setText(String.valueOf(control.getNumServicosPendentes()));
+        NovoServicoPanel.setVisible(false);
+    }//GEN-LAST:event_ConfirmarAgendamentoButtonActionPerformed
+
+    private void RealizarServicoButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_RealizarServicoButtonActionPerformed
+    {//GEN-HEADEREND:event_RealizarServicoButtonActionPerformed
+        try
+        {
+            if(!TextoData.getText().equals(""))
+            {
+                if(control.realizarServico((Servico)ListaServiços.getSelectedValue()))
+                {
+                    atualizarListaServicos();
+                    SaldoLabel.setText("R$ " + this.control.getWe().getSaldo());
+                    JOptionPane.showMessageDialog(null,"Serviço Concluído");
+                }
+                else
+                {
+                    JOptionPane.showMessageDialog(null,"Serviço já realizado");
+                }
+            }
+            else
+            {
+                JOptionPane.showMessageDialog(null,"Forneça uma data no formato DD/MM/AAAA");
+            }
+        }
+        catch(NullPointerException exc)
+        {
+            JOptionPane.showMessageDialog(null,"Selecione um serviço");
+        }
+        
+        ServicosConcluidosLabel.setText(String.valueOf(control.getNumServicosConcluidos()));
+        ServicosPendentesLabel.setText(String.valueOf(control.getNumServicosPendentes()));
+    }//GEN-LAST:event_RealizarServicoButtonActionPerformed
+
+    private void ListaFuncionariosValueChanged(javax.swing.event.ListSelectionEvent evt)//GEN-FIRST:event_ListaFuncionariosValueChanged
+    {//GEN-HEADEREND:event_ListaFuncionariosValueChanged
+        try
+        {
+            TextoValor.setText(String.valueOf(control.setValorTotal((Funcionario)ListaFuncionarios.getSelectedValue(), (ArrayList<Peca>)ListaPecas.getSelectedValuesList())));
+        }
+        catch(ClassCastException | NullPointerException exc)
+        {
+            TextoValor.setText("");
+        }
+    }//GEN-LAST:event_ListaFuncionariosValueChanged
+
+    private void ListaClientesValueChanged(javax.swing.event.ListSelectionEvent evt)//GEN-FIRST:event_ListaClientesValueChanged
+    {//GEN-HEADEREND:event_ListaClientesValueChanged
+        try
+        {
+            TextoValor.setText(String.valueOf(control.setValorTotal((Funcionario)ListaFuncionarios.getSelectedValue(), (ArrayList<Peca>)ListaPecas.getSelectedValuesList())));
+        }
+        catch(ClassCastException | NullPointerException exc)
+        {
+            TextoValor.setText("");
+        }
+    }//GEN-LAST:event_ListaClientesValueChanged
+
+    private void ListaPecasValueChanged(javax.swing.event.ListSelectionEvent evt)//GEN-FIRST:event_ListaPecasValueChanged
+    {//GEN-HEADEREND:event_ListaPecasValueChanged
+        try
+        {
+            TextoValor.setText(String.valueOf(control.setValorTotal((Funcionario)ListaFuncionarios.getSelectedValue(), (ArrayList<Peca>)ListaPecas.getSelectedValuesList())));
+        }
+        catch(ClassCastException | NullPointerException exc)
+        {
+            TextoValor.setText("");
+        }
+    }//GEN-LAST:event_ListaPecasValueChanged
+
+    private void CancelarAgendamentoButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_CancelarAgendamentoButtonActionPerformed
+    {//GEN-HEADEREND:event_CancelarAgendamentoButtonActionPerformed
+        NovoServicoPanel.setVisible(false);
+    }//GEN-LAST:event_CancelarAgendamentoButtonActionPerformed
+
+    private void CancelarServicoButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_CancelarServicoButtonActionPerformed
+    {//GEN-HEADEREND:event_CancelarServicoButtonActionPerformed
+        try
+        {
+            if(control.cancelarServico((Servico)ListaServiços.getSelectedValue()))
+            {
+                ServicosPendentesLabel.setText(String.valueOf(control.getNumServicosPendentes()));
+                JOptionPane.showMessageDialog(null,"Serviço cancelado");
+            }
+            else
+            {
+                JOptionPane.showMessageDialog(null,"Impossível cancelar serviço");
+            }
+        }
+        catch(NullPointerException exc)
+        {
+            JOptionPane.showMessageDialog(null,"Selecione um serviço");
+        }
+    }//GEN-LAST:event_CancelarServicoButtonActionPerformed
+
+    private void RelatorioButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_RelatorioButtonActionPerformed
+    {//GEN-HEADEREND:event_RelatorioButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_RelatorioButtonActionPerformed
+
+    //////////////////////////////////////////////////////
+    /*          TERMINAR O BOTÃO ALTERAR SERVIÇO        */
+    private void AlterarServicoButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_AlterarServicoButtonActionPerformed
+    {//GEN-HEADEREND:event_AlterarServicoButtonActionPerformed
+        try
+        {
+            this.atualizarListaClientes();
+            this.atualizarListaFuncionarios();
+            this.atualizarListaPecas();
+            NovoServicoPanel.setVisible(true);
+        }
+        catch(NullPointerException exc)
+        {
+            NovoServicoPanel.setVisible(false);
+            JOptionPane.showMessageDialog(null,"Selecione um serviço");
+        }
+    }//GEN-LAST:event_AlterarServicoButtonActionPerformed
+
+    private void ListaServiçosValueChanged(javax.swing.event.ListSelectionEvent evt)//GEN-FIRST:event_ListaServiçosValueChanged
+    {//GEN-HEADEREND:event_ListaServiçosValueChanged
+        
+    }//GEN-LAST:event_ListaServiçosValueChanged
+
+    private void ListaServiçosComponentAdded(java.awt.event.ContainerEvent evt)//GEN-FIRST:event_ListaServiçosComponentAdded
+    {//GEN-HEADEREND:event_ListaServiçosComponentAdded
+        ServicosConcluidosLabel.setText(String.valueOf(control.getNumServicosConcluidos()));
+        ServicosPendentesLabel.setText(String.valueOf(control.getNumServicosPendentes()));
+    }//GEN-LAST:event_ListaServiçosComponentAdded
+
+    private void formFocusGained(java.awt.event.FocusEvent evt)//GEN-FIRST:event_formFocusGained
+    {//GEN-HEADEREND:event_formFocusGained
+        FuncionariosLabel.setText(String.valueOf(control.ctrlFuncionarios().getListaFuncionarios().size()));
+    }//GEN-LAST:event_formFocusGained
+
+    private void formComponentShown(java.awt.event.ComponentEvent evt)//GEN-FIRST:event_formComponentShown
+    {//GEN-HEADEREND:event_formComponentShown
+        FuncionariosLabel.setText(String.valueOf(control.ctrlFuncionarios().getListaFuncionarios().size()));
+        ServicosConcluidosLabel.setText(String.valueOf(control.getNumServicosConcluidos()));
+        ServicosPendentesLabel.setText(String.valueOf(control.getNumServicosPendentes()));
+        SaldoLabel.setText("R$ " + this.control.getWe().getSaldo());
+    }//GEN-LAST:event_formComponentShown
+
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton AgendarButton;
+    private javax.swing.JButton AlterarServicoButton;
+    private javax.swing.JButton CancelarAgendamentoButton;
+    private javax.swing.JButton CancelarServicoButton;
     private javax.swing.JComboBox<String> ClientesComboBox;
+    private javax.swing.JButton ConfirmarAgendamentoButton;
+    private javax.swing.JButton DescontoButton;
     private javax.swing.JComboBox<String> FuncionariosComboBox;
+    private javax.swing.JLabel FuncionariosLabel;
+    private javax.swing.JList ListaClientes;
     private javax.swing.JList ListaFuncionarios;
-    private javax.swing.JList ListaPessoas;
-    private javax.swing.JList ListaPeças;
+    private javax.swing.JList ListaPecas;
     private javax.swing.JList ListaServiços;
     private javax.swing.JDialog NovoServicoPanel;
+    private javax.swing.JButton RealizarServicoButton;
+    private javax.swing.JButton RelatorioButton;
+    private javax.swing.JLabel SaldoLabel;
     private javax.swing.JScrollPane ScrollPanelClientesp;
     private javax.swing.JScrollPane ScrollPanelClientesp1;
     private javax.swing.JScrollPane ScrollPanelClientesp2;
     private javax.swing.JScrollPane ScrollPanelClientesp4;
+    private javax.swing.JLabel ServicosConcluidosLabel;
+    private javax.swing.JLabel ServicosPendentesLabel;
     private javax.swing.JFormattedTextField TextoData;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
-    private javax.swing.JButton jButton8;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
+    private javax.swing.JTextField TextoValor;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JButton serviçosLabel;
     // End of variables declaration//GEN-END:variables
 }

@@ -26,7 +26,7 @@ public class ClientesPanel extends javax.swing.JPanel
         
         for(int i = 0; i < control.ctrlClientes().getPessoasClientes().size(); i++) 
         {
-            listModel.addElement(control.ctrlClientes().getPessoasClientes().get(i).getNome());
+            listModel.addElement(control.ctrlClientes().getPessoasClientes().get(i));
         }
     }
     
@@ -260,12 +260,6 @@ public class ClientesPanel extends javax.swing.JPanel
         }
         else
             JOptionPane.showMessageDialog(null,"Não foi possivel Cadastar, pois há campos vazios!");
-        
-        TextoCpf.setText("");
-        TextoEmail.setText("");
-        TextoNome.setText("");
-        TextoEndereco.setText("");
-        TextoTelefone.setText("");
     }//GEN-LAST:event_BotaoCadastrarActionPerformed
 
     private void TextoCpfActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_TextoCpfActionPerformed

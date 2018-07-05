@@ -12,6 +12,12 @@ public abstract class Registro
    private String endereco;
    private String telefone;
 
+   @Override
+    public String toString()
+    {
+        return this.nome;
+    }
+   
     public String getNome()
     {
         return nome;

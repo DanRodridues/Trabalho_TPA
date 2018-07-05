@@ -10,6 +10,12 @@ public class Pessoa extends Cliente
 {
     private final String cpf; //unico
 
+    @Override
+    public String toString()
+    {
+        return this.cpf + "\t    " + this.getNome() + "\t    " + this.getTelefone() + "\t    " + this.getEmail() + "\t    " + this.getEndereco();
+    }
+    
     public String getCpf()
     {
         return cpf;

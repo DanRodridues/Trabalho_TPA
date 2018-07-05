@@ -5,7 +5,10 @@
 package dns.manutenções.control;
 
 
+import dns.manutenções.model.Cliente;
 import dns.manutenções.model.DNSmanutencoes;
+import dns.manutenções.model.Funcionario;
+import dns.manutenções.model.Peca;
 import dns.manutenções.model.Servico;
 import java.util.ArrayList;
 /*
@@ -20,7 +23,7 @@ public class Controlador
     private ControladorFuncionarios funcionarios;
     
     private DNSmanutencoes we;
-
+    
     public Controlador()
     {
         this.we = DNSmanutencoes.newDNS();
@@ -30,21 +33,85 @@ public class Controlador
         this.funcionarios = new ControladorFuncionarios();
     }
 
+    public float setValorTotal(Funcionario funcionario, ArrayList<Peca> pecas)
+    {
+        float total = (5*funcionario.getSalario())/100;
+        
+        for(Peca p : pecas)
+        {
+            total += p.getValor();
+        }
+        
+        return total;
+    }
+    
     public ArrayList<Servico> getServicos()
     {
         return servicos;
     }
     
-    public float realizarServico(Servico servico)
+    public void cadastrarServico(float valor, String data, Cliente cliente, Funcionario funcionario, ArrayList<Peca> pecas)
     {
-        servico.setEstado(1);
+        Servico servico = new Servico(valor,data,cliente,funcionario,0);
         
-        return servico.getValor();
+        servico.setPecas(pecas);
+        this.servicos.add(servico);
     }
     
-    public DNSmanutencoes getWe()
+    public boolean realizarServico(Servico servico)
     {
-        return this.we;
+        if(servico.getEstado()==0)
+        {    
+            servico.setEstado(1);
+            
+            we.addSaldo(servico.getValor());
+        
+            return true;
+        }
+        
+        return false;
+    }
+    
+    public boolean cancelarServico(Servico servico)
+    {
+        if(servico.getEstado()==0)
+        {
+            servico.setEstado(-1);
+            
+            return true;
+        }
+        
+        return false;
+    }
+    
+    public int getNumServicosPendentes()
+    {
+        int ac = 0;
+                
+        for(Servico s : servicos)
+        {
+            if(s.getEstado()==0)
+            {
+                ac+=1;
+            }
+        }
+        
+        return ac;
+    }
+    
+    public int getNumServicosConcluidos()
+    {
+        int ac = 0;
+                
+        for(Servico s : servicos)
+        {
+            if(s.getEstado()==1)
+            {
+                ac+=1;
+            }
+        }
+        
+        return ac;
     }
     
     //Controllers --------------------------------------------------------------
@@ -62,5 +129,10 @@ public class Controlador
     public ControladorFuncionarios ctrlFuncionarios()
     {
         return this.funcionarios;
+    }
+    
+    public DNSmanutencoes getWe()
+    {
+        return this.we;
     }
 }

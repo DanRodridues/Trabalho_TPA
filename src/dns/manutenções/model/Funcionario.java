@@ -11,6 +11,12 @@ public class Funcionario extends Registro
     private final String matricula;
     private float salario;
 
+    @Override
+    public String toString()
+    {
+        return this.matricula + "\t    " + this.getNome() + "\t    R$ " + this.salario + "\t    " + this.getTelefone()  + "\t    " + this.getEndereco();
+    }
+    
     public String getMatricula()
     {
         return matricula;

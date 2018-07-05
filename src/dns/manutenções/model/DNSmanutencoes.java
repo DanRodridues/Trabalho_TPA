@@ -48,6 +48,16 @@ public class DNSmanutencoes
     {
         this.saldo = saldo;
     }
+    
+    public void addSaldo(float saldo)
+    {
+        this.saldo += saldo;
+    }
+    
+    public void subSaldo(float saldo)
+    {
+        this.saldo -= saldo;
+    }
 
     public int getNumFuncionarios()
     {
