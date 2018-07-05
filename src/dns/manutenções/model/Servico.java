@@ -19,6 +19,12 @@ public class Servico
     private ArrayList pecas;
     private String data;
 
+    @Override
+    public String toString()
+    {
+        return this.data + "  -  " + this.cliente.getNome() + "   Estado: " + estado + "\t   R$ " + this.valor;
+    }
+    
     public float getValor()
     {
         return valor;

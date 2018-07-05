@@ -10,7 +10,13 @@ public class Empresa extends Cliente
 {
     private final String cnpj; //unico
     private String contato;
-
+    
+    @Override
+    public String toString()
+    {
+        return this.cnpj + "\t  -  " + this.getNome() + "\t    tel: " + this.getTelefone() + "\t    " + this.getContato() + "\t    " + this.getEndereco();
+    }
+    
     public String getCnpj()
     {
         return cnpj;

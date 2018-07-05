@@ -13,6 +13,12 @@ public class Peca
     private final float preco;
     private float valor;
 
+    @Override
+    public String toString()
+    {
+        return this.codigo + "\t    " + this.nome + "\t   V: R$ " + this.valor + "\t   P: R$" + this.preco;
+    }
+    
     public String getCodigo()
     {
         return codigo;

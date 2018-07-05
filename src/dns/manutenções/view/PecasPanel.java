@@ -26,7 +26,7 @@ public class PecasPanel extends javax.swing.JPanel
         
         for(int i = 0; i < control.ctrlPecas().getListaPecas().size(); i++) 
         {
-            listModel.addElement(control.ctrlPecas().getListaPecas().get(i).getCodigo() + "       " + control.ctrlPecas().getListaPecas().get(i).getNome() + "       R$" + control.ctrlPecas().getListaPecas().get(i).getPreco());
+            listModel.addElement(control.ctrlPecas().getListaPecas().get(i));
         }
         
     }
@@ -257,28 +257,35 @@ public class PecasPanel extends javax.swing.JPanel
         TextoValor.setText("");
     }//GEN-LAST:event_BotaoLimparActionPerformed
 
+    /**  Remova os comentários do botão abaixo para 
+      *  habilitar a função de subtrair do saldo o 
+      *  preço da peça.
+      */
     private void BotaoCadastrarActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_BotaoCadastrarActionPerformed
     {//GEN-HEADEREND:event_BotaoCadastrarActionPerformed
         if((!"".equals(TextoCodigo.getText()))&&(!"".equals(TextoNome.getText()))&&(!"".equals(TextoPreço.getText()))&&(!"".equals(TextoValor.getText())))
         {
-            if(control.ctrlPecas().CadastrarPeca(TextoCodigo.getText( ),TextoNome.getText(),Float.parseFloat(TextoPreço.getText()),Float.parseFloat(TextoValor.getText())))
-            {
-                atualizarLista();
-                JOptionPane.showMessageDialog(null,"Cadastrado com Sucesso!");
-            }
-            else
-            {
+            //if((control.getWe().getSaldo()) < (Float.parseFloat(TextoPreço.getText())))
+            //{
+                if(control.ctrlPecas().CadastrarPeca(TextoCodigo.getText(),TextoNome.getText(),Float.parseFloat(TextoPreço.getText()),Float.parseFloat(TextoValor.getText())))
+                {
+                    //control.getWe().subSaldo(Float.parseFloat(TextoPreço.getText()));
+                    atualizarLista();
+                    JOptionPane.showMessageDialog(null,"Cadastrado com Sucesso!");
+                }
+                else
+                {
                 System.out.println("Erro ao cadastrar");
                 JOptionPane.showMessageDialog(null,"Ja existe Peça com esse CODIGO");
-            }
+                }
+            //}
+            //else
+            //{
+            //    JOptionPane.showMessageDialog(null,"Erro ao adquirir peça: Saldo insuficiente");
+            //}
         }
         else
             JOptionPane.showMessageDialog(null,"Não foi possivel Cadastar, pois há campos vazios!");
-
-        TextoCodigo.setText("");
-        TextoNome.setText("");
-        TextoPreço.setText("");
-        TextoValor.setText("");
     }//GEN-LAST:event_BotaoCadastrarActionPerformed
 
     private void ListaPeçasFocusGained(java.awt.event.FocusEvent evt)//GEN-FIRST:event_ListaPeçasFocusGained

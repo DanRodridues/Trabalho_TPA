@@ -48,12 +48,12 @@ public class JanelaDNS extends javax.swing.JFrame
         principalPanel = new javax.swing.JTabbedPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMaximumSize(new java.awt.Dimension(600, 420));
-        setMinimumSize(new java.awt.Dimension(600, 420));
+        setMaximumSize(new java.awt.Dimension(590, 410));
+        setMinimumSize(new java.awt.Dimension(590, 410));
         setName("Main"); // NOI18N
         setPreferredSize(new java.awt.Dimension(600, 420));
         setResizable(false);
-        setSize(new java.awt.Dimension(600, 420));
+        setSize(new java.awt.Dimension(590, 410));
         getContentPane().setLayout(new java.awt.CardLayout());
 
         principalPanel.setMaximumSize(new java.awt.Dimension(600, 420));
